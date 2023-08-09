@@ -1,0 +1,31 @@
+.page {
+  display: flex;
+}
+.sidebar {
+  width: 15%;
+  height: "100%";
+  min-height: 100vh;
+  background-color: #6c7a89;
+  padding-top: 5%;
+}
+.sidebar a {
+  color: #ececec;
+  font-family: sans-serif;
+  font-size: 16px;
+  background-color: #5c6774;
+  padding: 10px 10px;
+  margin: 0;
+  border-bottom: 1px solid #353b42;
+  border-top: 1px solid #353b42;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: block;
+  text-decoration: none;
+}
+.rootContainer {
+  width: 100%;
+}
+
+.hero {
+  text-align: center;
+}
