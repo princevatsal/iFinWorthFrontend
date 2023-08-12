@@ -1,19 +1,19 @@
 <div class="nav">
-  <div class="tab">Big Mac Index</div>
-  <div class="tab">World Bank Data</div>
+  <div class="tab" (click)="setCurrTable('bigMacIndex')">Big Mac Index</div>
+  <div class="tab" (click)="setCurrTable('worldBank')">World Bank Data</div>
 </div>
-
 <div class="content">
   <div class="tableContainer">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th *ngFor="let colName of tableFields" scope="col">{{ colName }}</th>
+          <th *ngFor="let colName of getDataFields()" scope="col">
+            {{ colName }}
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of tableData; index as i">
-          <!-- <th scope="row">{{ i + 1 }}</th> -->
+        <tr *ngFor="let item of getData(); index as i">
           <td *ngFor="let val of item">{{ renderValue(val) }}</td>
         </tr>
       </tbody>
@@ -26,7 +26,7 @@
   </div>
   <div class="rightContainer" *ngIf="showFilter">
     <p class="filterLabel">Filter By</p>
-    <div class="filter">
+    <div class="filter" *ngIf="showFilterCol('bigMacIndex')">
       <mat-form-field>
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
@@ -50,10 +50,42 @@
           >Invalid end date</mat-error
         >
       </mat-form-field>
+      <div class="filterButtons">
+        <div class="button" (click)="applyFilterBigMac()">Apply</div>
+        <div class="button" (click)="clearFilterBigMac()">Clear</div>
+      </div>
     </div>
-    <div class="filterButtons">
-      <div class="button">Apply</div>
-      <div class="button">Clear</div>
+    <div class="filter" *ngIf="showFilterCol('worldBank')">
+      <div class="row">
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="dropdownBasic1"
+              ngbDropdownToggle
+            >
+              Choose Series
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem *ngFor="let series of getSeriesIds()">
+                {{ series }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="example-section">
+        <div *ngFor="let country of showCountriesToFilter()">
+          <mat-checkbox class="example-margin" [(ngModel)]="country.checked">{{
+            getCountryName(country.code)
+          }}</mat-checkbox>
+        </div>
+      </section>
+      <div class="filterButtons">
+        <div class="button" (click)="applyFilterWorldBank()">Apply</div>
+        <div class="button" (click)="clearFilterWorldBank()">Clear</div>
+      </div>
     </div>
   </div>
 </div>
